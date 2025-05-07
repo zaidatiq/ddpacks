@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'ddpacks_backend.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.mysql',  # Use MySQL as the database engine
-        'NAME': 'ddpacks_db',  # Name of the MySQL database you created earlier
-        'USER': 'ddpacks_user',  # MySQL user you created (replace with your username)
-        'PASSWORD': 'password',  # The password for the MySQL user
+        'NAME': 'fahad',  # Name of the MySQL database you created earlier
+        'USER': 'root',  # MySQL user you created (replace with your username)
+        'PASSWORD': 'ubaid123',  # The password for the MySQL user
         'HOST': 'localhost',  # Set this to 'localhost' or the appropriate host
         'PORT': '3306',  # Default MySQL port, you can leave it as 3306  
     }
