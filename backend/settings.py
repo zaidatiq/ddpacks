@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-r!pc$z8n-tr%-6+5je^+cc#k%aj7bk4p52%3#6c0mof5p8o^z4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'rest_framework',
+    'corsheaders', 
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -74,8 +79,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+           'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'topackpolymer',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -124,3 +133,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 TEMPLATES[0]['DIRS'] = [BASE_DIR / 'core/templates']
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # your friend's IP + React port
+]
+
+CORS_ALLOW_ALL_ORIGINS = True

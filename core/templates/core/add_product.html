@@ -1,0 +1,16 @@
+<form method="POST">
+    {% csrf_token %}
+    SKU Code: <input name="sku_code"><br>
+    Name: <input name="name"><br>
+    Description: <textarea name="description"></textarea><br>
+    Quantity: <input type="number" name="quantity_per_unit"><br>
+    Unit:
+    <select name="unit_of_measurement">
+      <option value="box">Box</option>
+      <option value="carton">Carton</option>
+      <option value="kg">Kilogram</option>
+      <option value="piece">Piece</option>
+    </select><br>
+    <input type="submit" value="Add Product">
+  </form>
+  
