@@ -21,6 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-r!pc$z8n-tr%-6+5je^+cc#k%aj7bk4p52%3#6c0mof5p8o^z4'
+JWT_EXPIRY_HOURS = 24
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,7 +30,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
+AUTH_USER_MODEL = 'core.User'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     'corsheaders', 
     'core',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,7 +83,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
            'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'topackpolymer',
+        'NAME': 'topack2',
         'USER': 'root',
         'PASSWORD': '123456',
         'HOST': 'localhost',
@@ -107,6 +110,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -140,3 +147,5 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+

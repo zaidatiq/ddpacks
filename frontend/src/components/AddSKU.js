@@ -23,7 +23,7 @@ const AddSKU = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post('skus/add/', formData);
+      const res = await api.post('skus/', formData);
       setMessage({ type: 'success', text: res.data.message });
       setFormData({
         sku_code: '',

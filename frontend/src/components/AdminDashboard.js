@@ -23,7 +23,7 @@ const AdminDashboard = () => {
           <Card className="text-center p-3 shadow">
             <Card.Body>
               <Card.Title>Manage SKUs</Card.Title>
-              <Button variant="secondary" onClick={() => navigate('/admin/add-sku')}>
+              <Button variant="secondary" onClick={() => navigate('/admin/skus')}>
                 Add New SKU
               </Button>
             </Card.Body>

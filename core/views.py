@@ -1,5 +1,11 @@
 from django.http import JsonResponse
+from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
+from .models import User
+import bcrypt
+from .auth_utils import generate_jwt, jwt_required
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
 from .models import SKU, SKUAttribute, Inventory
 import json
 
@@ -230,3 +236,69 @@ def inventory_detail(request, inv_id):
     elif request.method == 'DELETE':
         inv.delete()
         return JsonResponse({'message': 'Inventory deleted'})
+
+
+#USER
+
+@csrf_exempt
+def register_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            required_fields = ['email', 'password', 'full_name', 'company_name', 'phone', 'address']
+            for field in required_fields:
+                if not data.get(field):
+                    return JsonResponse({'error': f'{field} is required'}, status=400)
+
+            if User.objects.filter(email=data['email']).exists():
+                return JsonResponse({'error': 'Email already registered'}, status=400)
+
+            hashed_password = make_password(data['password'])
+
+            user = User.objects.create(
+                email=data['email'],
+                password=hashed_password,
+                full_name=data['full_name'],
+                company_name=data['company_name'],
+                phone=data['phone'],
+                address=data['address']
+            )
+
+            return JsonResponse({'message': 'User registered successfully'}, status=201)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+
+
+@csrf_exempt
+def login_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            email = data.get('email')
+            password = data.get('password')
+
+            if not email or not password:
+                return JsonResponse({'error': 'Email and password are required'}, status=400)
+
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                return JsonResponse({'error': 'Invalid email or password'}, status=400)
+
+            if not check_password(password, user.password):
+                return JsonResponse({'error': 'Invalid email or password'}, status=400)
+
+            token = generate_jwt(user)
+
+            return JsonResponse({'token': token}, status=200)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+
+
+@jwt_required
+def protected_view(request):
+    return JsonResponse({'message': f'Hello, {request.user.full_name}! This is a protected endpoint.'})

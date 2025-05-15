@@ -1,26 +1,14 @@
 from django.urls import path
-from .views import (
-    sku_list, sku_detail,
-    attribute_list, attribute_detail,
-    inventory_list, inventory_detail
-)
+from . import views
 
 urlpatterns = [
-    #  GET all SKUs, or POST a new SKU
-    path('api/skus/', sku_list),
-
-    #  GET/UPDATE/DELETE a single SKU by ID
-    path('api/skus/<int:sku_id>/', sku_detail),
-
-    #  POST a new SKU attribute
-    path('api/attributes/', attribute_list),
-
-    #  UPDATE/DELETE an attribute by ID
-    path('api/attributes/<int:attr_id>/', attribute_detail),
-
-    #  GET all inventory data, or POST new inventory entry
-    path('api/inventory/', inventory_list),
-
-    # UPDATE/DELETE inventory by ID
-    path('api/inventory/<int:inv_id>/', inventory_detail),
+    path('api/register/', views.register_view),
+    path('api/login/', views.login_view),
+    path('api/protected/', views.protected_view),
+    path('api/skus/', views.sku_list),
+    path('api/skus/<int:sku_id>/', views.sku_detail),
+    path('api/attributes/', views.attribute_list),
+    path('api/attributes/<int:attr_id>/', views.attribute_detail),
+    path('api/inventory/', views.inventory_list),
+    path('api/inventory/<int:inv_id>/', views.inventory_detail),
 ]
