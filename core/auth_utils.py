@@ -13,8 +13,9 @@ def generate_jwt(user):
     payload = {
         'id': user.id,
         'email': user.email,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=JWT_EXPIRY_HOURS),
-        'iat': datetime.datetime.utcnow()
+        'role': 'admin' if user.is_superuser else 'user',
+        'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=JWT_EXPIRY_HOURS),
+        'iat': datetime.datetime.now(datetime.timezone.utc)
     }
     return jwt.encode(payload, JWT_SECRET, algorithm='HS256')
 

@@ -85,10 +85,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     company_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     address = models.TextField()
-
+    is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
+    role = models.CharField(max_length=20, default='user')
     date_joined = models.DateTimeField(default=timezone.now)
 
     objects = UserManager()
@@ -98,3 +98,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+
+
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    sku = models.ForeignKey(SKU, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
